@@ -1,0 +1,16 @@
+{
+  "version": "0.2",
+  "language": "en",
+  "words": [
+    "drawnix",
+    "mermaid"
+  ],
+  "ignorePaths": [
+    "node_modules/**",
+    "dist/**",
+    "coverage/**",
+    "*.log",
+    "package-lock.json",
+    "yarn.lock"
+  ]
+}

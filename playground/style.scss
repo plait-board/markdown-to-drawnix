@@ -1,0 +1,73 @@
+body {
+  font-family: sans-serif;
+  margin-top: 0;
+  #flowchart-container,
+  #unsupported {
+    max-width: 48%;
+  }
+}
+
+button {
+  height: 40px;
+  font-size: 16px;
+  background: #4dabf7;
+  border: 1px solid #a5d8ff;
+  box-shadow: none;
+  border-radius: 2px;
+  color: white;
+  cursor: pointer;
+}
+
+#drawnix {
+  width: 50vw;
+  height: 100vh;
+  position: fixed;
+  top: 0;
+  right: 0;
+  border-left: 1px solid #ccc;
+
+  .mobile-misc-tools-container {
+    display: none !important;
+  }
+}
+
+.drawnix-wrapper {
+  height: 100%;
+}
+
+#custom-test {
+  width: 50vw;
+
+  #render-drawnix-btn {
+    margin-top: 10px;
+  }
+
+  #custom-diagram {
+    margin-top: 20px;
+  }
+
+  #parsed-data-details {
+    margin-top: 20px;
+  }
+}
+
+#error {
+  color: red;
+  margin-top: 20px;
+}
+
+a {
+  color: #0071ce;
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.testcase-container pre {
+  font-size: 16px;
+  font-weight: 600;
+  font-style: italic;
+  background: #eeeef1;
+  white-space: pre-wrap;
+  width: 45vw;
+  padding: 5px;
+}
