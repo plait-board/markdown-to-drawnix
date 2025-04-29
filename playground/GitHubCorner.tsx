@@ -4,7 +4,7 @@ const GitHubCorner = () => {
   return (
     <>
       <a
-        href="https://github.com/plait-board/maridown-to-drawnix"
+        href="https://github.com/plait-board/markdown-to-drawnix.git"
         className="github-corner"
         aria-label="View source on GitHub"
       >
