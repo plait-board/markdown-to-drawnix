@@ -51,5 +51,5 @@ Try out [here](https://markdown-to-drawnix.pages.dev).
 
 ## Thanks 
 
-Inspired by [markmap](https://github.com/markmap/markmap)
+Inspired by [remark-parse](https://github.com/remarkjs/remark)
 
