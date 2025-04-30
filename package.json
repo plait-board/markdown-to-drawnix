@@ -16,7 +16,8 @@
     "preview": "yarn run build:playground && vite preview --outDir ./public",
     "test": "vitest",
     "test:coverage": "vitest --coverage",
-    "test:watch": "vitest --watch"
+    "test:watch": "vitest --watch",
+    "release": "node scripts/release.js"
   },
   "dependencies": {
     "remark-parse": "^11.0.0",
