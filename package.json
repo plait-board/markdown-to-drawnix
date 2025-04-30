@@ -1,6 +1,6 @@
 {
   "name": "@plait-board/markdown-to-drawnix",
-  "version": "0.0.5",
+  "version": "0.0.0",
   "description": "Mermaid to Drawnix Diagrams",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
