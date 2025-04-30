@@ -79,7 +79,8 @@ const parseMarkdownToDrawnix = (definition: string, mainTopic?: string) => {
   }
   // 转化为 drawnix 思维导图
   const firstHeadingText = getTextFromNode(firstHeading);
-  const centerTopic = mainTopic || firstHeadingText || "中心主题";
+  const centerTopic =
+    mainTopic || (hasTopTopic && firstHeadingText) || "中心主题";
   const topicSize = getTopicSize(true, false, buildText(centerTopic));
   const mind = createMindElement(
     centerTopic,
