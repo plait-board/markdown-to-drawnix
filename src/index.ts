@@ -1,63 +1,123 @@
-import { DEFAULT_FONT_SIZE } from "./constants.js";
-import { graphToDrawnix } from "./graphToDrawnix.js";
-import { parseMermaid } from "./parseMermaid.js";
+import { createMindElement, getTopicSize, MindElement } from "@plait/mind";
+import { buildText } from "@plait/common";
+import { MindLayoutType } from "@plait/layouts";
+import { unified } from "unified";
+import remarkParse from "remark-parse";
 
-export interface MermaidConfig {
-  /**
-   * Whether to start the diagram automatically when the page loads.
-   * @default false
-   */
-  startOnLoad?: boolean;
-  /**
-   * The flowchart curve style.
-   * @default "linear"
-   */
-  flowchart?: {
-    curve?: "linear" | "basis";
-  };
-  /**
-   * Theme variables
-   * @default { fontSize: "25px" }
-   */
-  themeVariables?: {
-    fontSize?: string;
-  };
-  /**
-   * Maximum number of edges to be rendered.
-   * @default 1000
-   */
-  maxEdges?: number;
-  /**
-   * Maximum number of characters to be rendered.
-   * @default 1000
-   */
-  maxTextSize?: number;
+export interface TreeNode {
+  type: string;
+  children?: TreeNode[];
+  depth?: number;
+  value?: string;
+  [key: string]: any;
 }
 
-export interface DrawnixConfig {
-  fontSize: number;
-}
-
-const parseMermaidToDrawnix = async (
-  definition: string,
-  config?: MermaidConfig
-) => {
-  const mermaidConfig = config || {};
-  const fontSize =
-    parseInt(mermaidConfig.themeVariables?.fontSize ?? "") || DEFAULT_FONT_SIZE;
-  const parsedMermaidData = await parseMermaid(definition, {
-    ...mermaidConfig,
-    themeVariables: {
-      ...mermaidConfig.themeVariables,
-      // Multiplying by 1.25 to increase the font size by 25% and render correctly in Drawnix
-      fontSize: `${fontSize * 1.25}px`,
-    },
-  });
-  // Only font size supported for drawnix elements
-  const drawnixElements = graphToDrawnix(parsedMermaidData, {
-    fontSize,
-  });
-  return drawnixElements;
+export const getTextFromNode = (node: TreeNode) => {
+  let text = "";
+  const transform = (node: TreeNode) => {
+    if (
+      node.type === "text" ||
+      node.type === "inlineCode" ||
+      node.type === "code"
+    ) {
+      text += node.value;
+      return;
+    }
+    if (node.type === "link") {
+      text += `${node.url}`;
+      return;
+    }
+    if (node.children && node.children.length > 0) {
+      node.children.forEach((node) => {
+        transform(node);
+      });
+    }
+  };
+  transform(node);
+  return text;
 };
 
-export { parseMermaidToDrawnix };
+export const getParentMindNode = (
+  node: TreeNode,
+  parentNodeMap: Record<string, MindElement>
+) => {
+  if (node.type === "heading") {
+    const depth = node.depth as number;
+    for (let i = depth - 1; i >= 0; i--) {
+      if (parentNodeMap[`${i}`]) {
+        return parentNodeMap[`${i}`];
+      }
+    }
+  }
+  return parentNodeMap["0"];
+};
+
+const parseMarkdownToDrawnix = (definition: string, mainTopic?: string) => {
+  const centerTopic = mainTopic || "中心主题";
+  const topicSize = getTopicSize(true, false, buildText(centerTopic));
+  const mind = createMindElement(
+    centerTopic,
+    topicSize.width,
+    topicSize.height,
+    {
+      layout: MindLayoutType.right,
+    }
+  );
+  mind.isRoot = true;
+  mind.type = "mindmap";
+  const parentNodeMap: Record<string, MindElement> = { "0": mind };
+  let currentParent: MindElement = mind;
+  const transform = (node: TreeNode, isNext = false) => {
+    if (node.type === "heading") {
+      const parentMindNode = getParentMindNode(node, parentNodeMap);
+      const text = getTextFromNode(node);
+      if (!text) {
+        return;
+      }
+      const { width, height } = getTopicSize(false, false, buildText(text));
+      const element = createMindElement(text, width, height, {});
+      parentMindNode.children.push(element);
+      parentNodeMap[`${node.depth}`] = element;
+      currentParent = element;
+    } else if (node.type === "list") {
+      node.children?.forEach((node) => {
+        transform(node);
+      });
+    } else if (node.type === "listItem") {
+      if (node.children && node.children.length > 1) {
+        const _currentParent = currentParent;
+        node.children.forEach((node, index) => {
+          transform(node, index === 0);
+        });
+        currentParent = _currentParent;
+        return;
+      }
+      const text = getTextFromNode(node);
+      if (!text) {
+        return;
+      }
+      const { width, height } = getTopicSize(false, false, buildText(text));
+      const element = createMindElement(text, width, height, {});
+      currentParent.children.push(element);
+    } else {
+      const text = getTextFromNode(node);
+      if (!text) {
+        return;
+      }
+      const { width, height } = getTopicSize(false, false, buildText(text));
+      const element = createMindElement(text, width, height, {});
+      currentParent.children.push(element);
+      if (isNext) {
+        currentParent = element;
+      }
+    }
+  };
+  const processor = unified().use(remarkParse);
+  const root = processor.parse(definition);
+  root.children?.forEach((node) => {
+    transform(node);
+  });
+  return mind;
+};
+
+export { parseMarkdownToDrawnix };
