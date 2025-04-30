@@ -1,4 +1,4 @@
-import { useRef, useState } from "react";
+import { useRef } from "react";
 import { Drawnix } from "@drawnix/drawnix";
 import { PlaitBoard, PlaitElement, PlaitTheme, Viewport } from "@plait/core";
 
