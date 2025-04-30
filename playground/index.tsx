@@ -11,7 +11,6 @@ const App = () => {
   const handleOnChange = useCallback(async (markdown: string) => {
     const mind = parseMarkdownToDrawnix(markdown);
     mind.points = [[0, 0]];
-    console.log(mind);
     setElements([mind]);
   }, []);
 

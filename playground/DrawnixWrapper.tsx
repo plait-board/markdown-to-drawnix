@@ -1,6 +1,6 @@
 import { useRef } from "react";
 import { Drawnix } from "@drawnix/drawnix";
-import { PlaitBoard, PlaitElement, PlaitTheme, Viewport } from "@plait/core";
+import { PlaitBoard, PlaitElement, ThemeColorMode } from "@plait/core";
 
 import "./../node_modules/@drawnix/drawnix/style.css";
 import "./../node_modules/@drawnix/react-board/style.css";
@@ -13,11 +13,13 @@ interface DrawnixWrapperProps {
 
 const DrawnixWrapper = ({ elements, afterInit }: DrawnixWrapperProps) => {
   const boardRef = useRef<PlaitBoard | null>(null);
+  const theme = { themeColorMode: ThemeColorMode.colorful };
 
   return (
     <div className="drawnix-wrapper">
       <Drawnix
         value={elements}
+        theme={theme}
         onChange={(value) => {}}
         afterInit={(board: PlaitBoard) => {
           boardRef.current = board;

@@ -38,6 +38,11 @@ button {
 #custom-test {
   width: 50vw;
 
+  #markdown-input {
+    width: 100%;
+    height: calc(100vh - 90px);
+  }
+
   #render-drawnix-btn {
     margin-top: 10px;
   }

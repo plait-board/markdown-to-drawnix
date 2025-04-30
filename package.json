@@ -1,7 +1,7 @@
 {
   "name": "@plait-board/markdown-to-drawnix",
   "version": "0.0.1",
-  "description": "Mermaid to Drawnix Diagrams",
+  "description": "Markdown to Drawnix mind map",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "files": [

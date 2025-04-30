@@ -3,6 +3,7 @@ import { buildText } from "@plait/common";
 import { MindLayoutType } from "@plait/layouts";
 import { unified } from "unified";
 import remarkParse from "remark-parse";
+import { Heading } from "mdast";
 
 export interface TreeNode {
   type: string;
@@ -53,7 +54,32 @@ export const getParentMindNode = (
 };
 
 const parseMarkdownToDrawnix = (definition: string, mainTopic?: string) => {
-  const centerTopic = mainTopic || "中心主题";
+  // 解析 markdown
+  const processor = unified().use(remarkParse);
+  const root = processor.parse(definition);
+  console.log(root);
+
+  let hasTopTopic = false;
+
+  const firstHeading = root.children?.find((node) => {
+    if (node.type === "heading") {
+      return node;
+    }
+  }) as Heading;
+  if (
+    firstHeading &&
+    root.children?.filter(
+      (node) =>
+        node.type === "heading" &&
+        firstHeading &&
+        node.depth === firstHeading.depth
+    ).length === 1
+  ) {
+    hasTopTopic = true;
+  }
+  // 转化为 drawnix 思维导图
+  const firstHeadingText = getTextFromNode(firstHeading);
+  const centerTopic = mainTopic || firstHeadingText || "中心主题";
   const topicSize = getTopicSize(true, false, buildText(centerTopic));
   const mind = createMindElement(
     centerTopic,
@@ -68,6 +94,9 @@ const parseMarkdownToDrawnix = (definition: string, mainTopic?: string) => {
   const parentNodeMap: Record<string, MindElement> = { "0": mind };
   let currentParent: MindElement = mind;
   const transform = (node: TreeNode, isNext = false) => {
+    if (hasTopTopic && !mainTopic && node === firstHeading) {
+      return;
+    }
     if (node.type === "heading") {
       const parentMindNode = getParentMindNode(node, parentNodeMap);
       const text = getTextFromNode(node);
@@ -112,8 +141,7 @@ const parseMarkdownToDrawnix = (definition: string, mainTopic?: string) => {
       }
     }
   };
-  const processor = unified().use(remarkParse);
-  const root = processor.parse(definition);
+
   root.children?.forEach((node) => {
     transform(node);
   });
