@@ -1,3 +1,18 @@
+## 0.0.2 (2025-05-01)
+
+### 修复
+
+- apply firstHeading only hasTopTopic
+
+### 其他
+
+- build: improve playground style
+- build: update readme
+- chore: update package lock
+- chore: update package lock
+- build: improve playground
+- build: improve playground
+
 ## 0.0.1 (2025-04-30)
 
 ### 新特性
