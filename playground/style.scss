@@ -40,7 +40,18 @@ button {
 
   #markdown-input {
     width: 100%;
-    height: calc(100vh - 90px);
+    height: calc(100vh - 120px);
+    padding: 12px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 14px;
+    line-height: 1.5;
+    resize: none;
+    outline: none;
+    margin-top: 1rem;
+    &:focus {
+      border-color: #4dabf7;
+    }
   }
 
   #render-drawnix-btn {
@@ -75,4 +86,8 @@ a {
   white-space: pre-wrap;
   width: 45vw;
   padding: 5px;
+}
+
+body {
+  margin: 8px 16px;
 }

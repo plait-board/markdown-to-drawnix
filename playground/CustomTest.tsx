@@ -70,7 +70,7 @@ const CustomTest = ({ onChange }: CustomTestProps) => {
           onChange={(e) => {
             onChange(e.target.value);
           }}
-          style={{ marginTop: "1rem" }}
+
           placeholder="Input Markdown Syntax"
           defaultValue={DEFAULT_MARKDOWN_VALUE}
         />
