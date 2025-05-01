@@ -17,7 +17,8 @@
     "test": "vitest",
     "test:coverage": "vitest --coverage",
     "test:watch": "vitest --watch",
-    "release": "node scripts/release.js"
+    "release": "node scripts/release.js",
+    "pub": "npm publish --access public"
   },
   "dependencies": {
     "remark-parse": "^11.0.0",
