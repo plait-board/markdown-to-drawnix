@@ -1,3 +1,13 @@
+## 0.0.3 (2025-05-01)
+
+### 修复
+
+- correct return value type
+
+### 其他
+
+- chore: add pub script
+
 ## 0.0.2 (2025-05-01)
 
 ### 修复
