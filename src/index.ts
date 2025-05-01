@@ -62,7 +62,6 @@ const parseMarkdownToDrawnix = (definition: string, mainTopic?: string) => {
   // 解析 markdown
   const processor = unified().use(remarkParse);
   const root = processor.parse(definition);
-  console.log(root);
 
   let hasTopTopic = false;
 
