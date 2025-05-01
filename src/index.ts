@@ -1,4 +1,9 @@
-import { createMindElement, getTopicSize, MindElement } from "@plait/mind";
+import {
+  createMindElement,
+  getTopicSize,
+  MindElement,
+  PlaitMind,
+} from "@plait/mind";
 import { buildText } from "@plait/common";
 import { MindLayoutType } from "@plait/layouts";
 import { unified } from "unified";
@@ -146,7 +151,7 @@ const parseMarkdownToDrawnix = (definition: string, mainTopic?: string) => {
   root.children?.forEach((node) => {
     transform(node);
   });
-  return mind;
+  return mind as PlaitMind;
 };
 
 export { parseMarkdownToDrawnix };
