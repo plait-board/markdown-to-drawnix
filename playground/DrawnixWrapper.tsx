@@ -2,9 +2,9 @@ import { useRef } from "react";
 import { Drawnix } from "@drawnix/drawnix";
 import { PlaitBoard, PlaitElement, ThemeColorMode } from "@plait/core";
 
-import "./../node_modules/@drawnix/drawnix/style.css";
-import "./../node_modules/@drawnix/react-board/style.css";
-import "./../node_modules/@drawnix/react-text/style.css";
+import "./../node_modules/@drawnix/drawnix/index.css";
+import "./../node_modules/@plait-board/react-board/index.css";
+import "./../node_modules/@plait-board/react-text/index.css";
 
 interface DrawnixWrapperProps {
   elements: PlaitElement[];

@@ -26,9 +26,9 @@
   },
   "devDependencies": {
     "@babel/core": "7.12.0",
-    "@drawnix/drawnix": "0.0.4-1",
-    "@drawnix/react-board": "0.0.4-1",
-    "@drawnix/react-text": "0.0.4-1",
+    "@drawnix/drawnix": "0.1.4",
+    "@plait-board/react-board": "0.1.4",
+    "@plait-board/react-text": "0.1.4",
     "@types/react": "18.2.14",
     "@types/react-dom": "18.2.4",
     "@typescript-eslint/eslint-plugin": "5.59.9",

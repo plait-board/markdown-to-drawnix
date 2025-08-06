@@ -85,7 +85,7 @@ const parseMarkdownToDrawnix = (definition: string, mainTopic?: string) => {
   const firstHeadingText = getTextFromNode(firstHeading);
   const centerTopic =
     mainTopic || (hasTopTopic && firstHeadingText) || "中心主题";
-  const topicSize = getTopicSize(true, false, buildText(centerTopic));
+  const topicSize = getTopicSize(null as any, true, false, buildText(centerTopic));
   const mind = createMindElement(
     centerTopic,
     topicSize.width,
@@ -108,7 +108,7 @@ const parseMarkdownToDrawnix = (definition: string, mainTopic?: string) => {
       if (!text) {
         return;
       }
-      const { width, height } = getTopicSize(false, false, buildText(text));
+      const { width, height } = getTopicSize(null as any, false, false, buildText(text));
       const element = createMindElement(text, width, height, {});
       parentMindNode.children.push(element);
       parentNodeMap[`${node.depth}`] = element;
@@ -130,7 +130,7 @@ const parseMarkdownToDrawnix = (definition: string, mainTopic?: string) => {
       if (!text) {
         return;
       }
-      const { width, height } = getTopicSize(false, false, buildText(text));
+      const { width, height } = getTopicSize(null as any, false, false, buildText(text));
       const element = createMindElement(text, width, height, {});
       currentParent.children.push(element);
     } else {
@@ -138,7 +138,7 @@ const parseMarkdownToDrawnix = (definition: string, mainTopic?: string) => {
       if (!text) {
         return;
       }
-      const { width, height } = getTopicSize(false, false, buildText(text));
+      const { width, height } = getTopicSize(null as any, false, false, buildText(text));
       const element = createMindElement(text, width, height, {});
       currentParent.children.push(element);
       if (isNext) {
