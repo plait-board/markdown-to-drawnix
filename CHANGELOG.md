@@ -1,3 +1,9 @@
+## 0.0.7 (2025-09-03)
+
+### 其他
+
+- chore: bump plait into 0.85.0 and handle break changes
+
 ## 0.0.6 (2025-08-06)
 
 ## 0.0.5 (2025-08-06)
