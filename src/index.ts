@@ -1,10 +1,4 @@
-import {
-  createMindElement,
-  getTopicSize,
-  MindElement,
-  PlaitMind,
-} from "@plait/mind";
-import { buildText } from "@plait/common";
+import { createMindElement, MindElement, PlaitMind } from "@plait/mind";
 import { MindLayoutType } from "@plait/layouts";
 import { unified } from "unified";
 import remarkParse from "remark-parse";
@@ -85,15 +79,9 @@ const parseMarkdownToDrawnix = (definition: string, mainTopic?: string) => {
   const firstHeadingText = getTextFromNode(firstHeading);
   const centerTopic =
     mainTopic || (hasTopTopic && firstHeadingText) || "中心主题";
-  const topicSize = getTopicSize(null as any, true, false, buildText(centerTopic));
-  const mind = createMindElement(
-    centerTopic,
-    topicSize.width,
-    topicSize.height,
-    {
-      layout: MindLayoutType.right,
-    }
-  );
+  const mind = createMindElement(centerTopic, {
+    layout: MindLayoutType.right,
+  });
   mind.isRoot = true;
   mind.type = "mindmap";
   const parentNodeMap: Record<string, MindElement> = { "0": mind };
@@ -108,8 +96,7 @@ const parseMarkdownToDrawnix = (definition: string, mainTopic?: string) => {
       if (!text) {
         return;
       }
-      const { width, height } = getTopicSize(null as any, false, false, buildText(text));
-      const element = createMindElement(text, width, height, {});
+      const element = createMindElement(text, {});
       parentMindNode.children.push(element);
       parentNodeMap[`${node.depth}`] = element;
       currentParent = element;
@@ -130,16 +117,14 @@ const parseMarkdownToDrawnix = (definition: string, mainTopic?: string) => {
       if (!text) {
         return;
       }
-      const { width, height } = getTopicSize(null as any, false, false, buildText(text));
-      const element = createMindElement(text, width, height, {});
+      const element = createMindElement(text, {});
       currentParent.children.push(element);
     } else {
       const text = getTextFromNode(node);
       if (!text) {
         return;
       }
-      const { width, height } = getTopicSize(null as any, false, false, buildText(text));
-      const element = createMindElement(text, width, height, {});
+      const element = createMindElement(text, {});
       currentParent.children.push(element);
       if (isNext) {
         currentParent = element;
