@@ -1,3 +1,14 @@
+## 0.0.8 (2025-12-05)
+
+### 修复
+
+- upgrade @plait-board/* to resolve build error
+- handle no heading scenario, resolve the issue mentioned in https://github.com/plait-board/drawnix/issues/345
+
+### 其他
+
+- chore: update package-lock
+
 ## 0.0.7 (2025-09-03)
 
 ### 其他
